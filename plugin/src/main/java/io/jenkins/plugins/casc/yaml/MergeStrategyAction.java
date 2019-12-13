@@ -5,6 +5,7 @@ import hudson.ExtensionList;
 import hudson.model.Api;
 import hudson.model.UnprotectedRootAction;
 import hudson.util.HttpResponses;
+import io.jenkins.plugins.casc.ConfigurationAsCode;
 import javax.annotation.CheckForNull;
 import jenkins.model.Jenkins;
 import net.sf.json.JSONArray;
@@ -50,5 +51,12 @@ public class MergeStrategyAction implements UnprotectedRootAction {
         mergeStrategyList.forEach(array::add);
 
         return HttpResponses.okJSON(array);
+    }
+
+    @Restricted(NoExternalUse.class)
+    public HttpResponse doCurrent() {
+        String mergeStrategyName = ConfigurationAsCode.get().getMergeStrategyName();
+
+        return HttpResponses.plainText(mergeStrategyName);
     }
 }

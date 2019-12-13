@@ -51,6 +51,11 @@ public final class YamlUtils {
      * Load configuration-as-code model from a set of Yaml sources, merging documents
      */
     public static Mapping loadFrom(List<YamlSource> sources, MergeStrategy mergeStrategy) throws ConfiguratorException {
+        if (mergeStrategy == null) {
+            LOGGER.warning("merge strategy is null, returned an empty document.");
+            return Mapping.EMPTY;
+        }
+
         if (sources.isEmpty()) return Mapping.EMPTY;
         final Node merged = merge(sources, mergeStrategy);
         if (merged == null) {

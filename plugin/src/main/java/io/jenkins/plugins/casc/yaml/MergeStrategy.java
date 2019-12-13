@@ -7,6 +7,8 @@ import io.jenkins.plugins.casc.snakeyaml.nodes.Node;
  * YAML merge strategy between multiple files
  */
 public interface MergeStrategy {
+    /** in order to keep back compatible, take the previous behaviour as default */
+    String DEFAULT_STRATEGY = "irreconcilable";
 
     /**
      * Merge two nodes which come from two YAML files

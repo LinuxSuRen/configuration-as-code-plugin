@@ -3,9 +3,11 @@ package io.jenkins.plugins.casc;
 import edu.umd.cs.findbugs.annotations.CheckForNull;
 import edu.umd.cs.findbugs.annotations.NonNull;
 import io.jenkins.plugins.casc.model.CNode;
+import io.jenkins.plugins.casc.yaml.MergeStrategy;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import org.kohsuke.stapler.DataBoundSetter;
 import org.kohsuke.stapler.Stapler;
 
 /**
@@ -17,6 +19,7 @@ public class ConfigurationContext implements ConfiguratorRegistry {
     private Deprecation deprecation = Deprecation.reject;
     private Restriction restriction = Restriction.reject;
     private Unknown unknown = Unknown.reject;
+    private String mergeStrategy = MergeStrategy.DEFAULT_STRATEGY;
 
     /**
      * the model-introspection model to be applied by configuration-as-code.
@@ -50,6 +53,10 @@ public class ConfigurationContext implements ConfiguratorRegistry {
 
     public Unknown getUnknown() { return unknown; }
 
+    public String getMergeStrategy() {
+        return mergeStrategy;
+    }
+
     public void setDeprecated(Deprecation deprecation) {
         this.deprecation = deprecation;
     }
@@ -60,6 +67,11 @@ public class ConfigurationContext implements ConfiguratorRegistry {
 
     public void setUnknown(Unknown unknown) {
         this.unknown = unknown;
+    }
+
+    @DataBoundSetter
+    public void setMergeStrategy(String mergeStrategy) {
+        this.mergeStrategy = mergeStrategy;
     }
 
 

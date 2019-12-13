@@ -25,6 +25,6 @@ public class MergeStrategyTest {
         assertTrue("should have at least one strategy",
             strategyExtensionList.size() > 0);
         assertEquals("default merge strategy's name should be default",
-            "default", MergeStrategyFactory.getMergeStrategy().getName());
+            MergeStrategy.DEFAULT_STRATEGY, MergeStrategyFactory.getMergeStrategy(null).getName());
     }
 }

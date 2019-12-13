@@ -601,7 +601,12 @@ public class ConfigurationAsCode extends ManagementLink {
 
     private void configureWith(List<YamlSource> sources) throws ConfiguratorException {
         lastTimeLoaded = System.currentTimeMillis();
-        configureWith( YamlUtils.loadFrom(sources, MergeStrategyFactory.getMergeStrategy()) );
+
+        String mergeStrategyName = getMergeStrategyName();
+        LOGGER.info("load config files with merge strategy: " + mergeStrategyName);
+
+        configureWith( YamlUtils.loadFrom(sources, MergeStrategyFactory.getMergeStrategy(mergeStrategyName)) );
+
         closeSources(sources);
     }
 
@@ -614,7 +619,12 @@ public class ConfigurationAsCode extends ManagementLink {
 
     private Map<Source, String> checkWith(List<YamlSource> sources) throws ConfiguratorException {
         if (sources.isEmpty()) return Collections.emptyMap();
-        return checkWith( YamlUtils.loadFrom(sources, MergeStrategyFactory.getMergeStrategy()) );
+        return checkWith( YamlUtils.loadFrom(sources, MergeStrategyFactory.getMergeStrategy(getMergeStrategyName())) );
+    }
+
+    public String getMergeStrategyName() {
+        ConfigurationContext context = new ConfigurationContext(registry);
+        return context.getMergeStrategy();
     }
 
     private void closeSources(List<YamlSource> sources) {
